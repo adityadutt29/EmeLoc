@@ -46,7 +46,9 @@ const Profile = () => {
 
   return (
     <div className="max-w-2xl mx-auto mt-8 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Operator Profile</h2>
+      <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white text-center border-b-2 pb-2 border-gray-300 dark:border-gray-700">
+        Operator Profile
+      </h2>
       <div className="space-y-4">
         <ProfileField label="Name" value={user.name || 'Not provided'} />
         <ProfileField label="Email" value={user.email} />
@@ -62,7 +64,7 @@ const Profile = () => {
 
 const ProfileField = ({ label, value }) => (
   <div className="flex flex-col sm:flex-row sm:justify-between">
-    <span className="font-medium text-gray-600 dark:text-gray-300">{label}:</span>
+    <span className="font-bold text-gray-600 dark:text-gray-300">{label}:</span>
     <span className="text-gray-800 dark:text-white">{value}</span>
   </div>
 );
