@@ -4,49 +4,66 @@
 
 body {
     font-family: 'Inter', sans-serif;
-  }
-  
-  .min-h-screen {
+}
+
+.min-h-screen {
     min-height: 100vh;
-  }
-  
-  .bg-gray-50 {
+}
+
+.bg-gray-50 {
     background-color: #f9fafb;
-  }
-  
-  .text-gray-900 {
+}
+
+.text-gray-900 {
     color: #1a202c;
-  }
-  
-  .text-red-500 {
+}
+
+.text-red-500 {
     color: #f56565;
-  }
-  
-  .bg-indigo-600 {
+}
+
+.bg-indigo-600 {
     background-color: #4c51bf;
-  }
-  
-  .bg-indigo-700 {
+}
+
+.bg-indigo-700 {
     background-color: #434190;
-  }
-  
-  .focus\:ring-indigo-500:focus {
+}
+
+.focus\:ring-indigo-500:focus {
     --tw-ring-color: #6366f1;
-  }
-  
-  .focus\:border-indigo-500:focus {
+}
+
+.focus\:border-indigo-500:focus {
     border-color: #6366f1;
-  }
-  
-  .focus\:outline-none:focus {
+}
+
+.focus\:outline-none:focus {
     outline: 2px solid transparent;
     outline-offset: 2px;
-  }
-  
-  .focus\:ring-2:focus {
+}
+
+.focus\:ring-2:focus {
     box-shadow: 0 0 0 2px var(--tw-ring-color);
-  }
-  
-  .focus\:ring-offset-2:focus {
+}
+
+.focus\:ring-offset-2:focus {
     box-shadow: 0 0 0 2px var(--tw-ring-color), 0 0 0 2px var(--tw-ring-offset-color);
+}
+
+.container.with-sidebar {
+    width: calc(100% - 250px);
+    transition: width 0.3s ease;
+}
+
+.container.without-sidebar {
+    width: 100%;
+    transition: width 0.3s ease;
+}
+
+.sidebar-open {
+    position: absolute;
+    left: 17.5rem;
+    top: 1.5rem;
+    z-index: 50;
   }
