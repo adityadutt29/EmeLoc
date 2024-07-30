@@ -25,8 +25,6 @@ async function sendEmail(to, subject, textPart, htmlPart) {
 
 const OperatorAmbulance = () => {
     const [ambulances, setAmbulances] = useState([]);
-    const [newAmbulance, setNewAmbulance] = useState({ license_plate: '', driver_email: '' });
-    const [isLoading, setIsLoading] = useState(false);
     const [sendingTracker, setSendingTracker] = useState(null);
 
     useEffect(() => {
@@ -43,40 +41,6 @@ const OperatorAmbulance = () => {
             toast.error('Failed to fetch ambulances');
         } else {
             setAmbulances(data);
-        }
-    };
-
-    const handleInputChange = (e) => {
-        setNewAmbulance({ ...newAmbulance, [e.target.name]: e.target.value });
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setIsLoading(true);
-
-        try {
-            const ambulanceId = 'amb-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
-            const { data, error } = await supabase
-                .from('ambulances')
-                .insert({
-                    id: ambulanceId,
-                    license_plate: newAmbulance.license_plate,
-                    driver_email: newAmbulance.driver_email,
-                    status: 'available',
-                });
-
-            if (error) throw error;
-
-            await sendTrackerLink(ambulanceId, newAmbulance.driver_email);
-
-            toast.success('Ambulance added and email sent successfully');
-            setNewAmbulance({ license_plate: '', driver_email: '' });
-            fetchAmbulances();
-        } catch (error) {
-            console.error('Error adding ambulance:', error);
-            toast.error('Failed to add ambulance and send email');
-        } finally {
-            setIsLoading(false);
         }
     };
 
@@ -105,65 +69,39 @@ const OperatorAmbulance = () => {
     };
 
     return (
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-8 dark:text-white">
             <ToastContainer />
-            <h2 className="text-2xl font-bold mb-4">Manage Ambulances</h2>
-            <form onSubmit={handleSubmit} className="mb-8">
-                <div className="mb-4">
-                    <label htmlFor="license_plate" className="block text-sm font-medium text-gray-700">
-                        License Plate
-                    </label>
-                    <input
-                        type="text"
-                        id="license_plate"
-                        name="license_plate"
-                        value={newAmbulance.license_plate}
-                        onChange={handleInputChange}
-                        required
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label htmlFor="driver_email" className="block text-sm font-medium text-gray-700">
-                        Driver Email
-                    </label>
-                    <input
-                        type="email"
-                        id="driver_email"
-                        name="driver_email"
-                        value={newAmbulance.driver_email}
-                        onChange={handleInputChange}
-                        required
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                    />
-                </div>
-                <button
-                    type="submit"
-                    disabled={isLoading}
-                    className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${
-                        isLoading ? 'opacity-50 cursor-not-allowed' : ''
-                    }`}
-                >
-                    {isLoading ? 'Adding...' : 'Add Ambulance'}
-                </button>
-            </form>
-            <h3 className="text-xl font-bold mb-2">Ambulance List</h3>
-            <ul>
-                {ambulances.map((ambulance) => (
-                    <li key={ambulance.id} className="mb-2 flex items-center justify-between">
-                        <span>{ambulance.license_plate} - {ambulance.status} - {ambulance.driver_email}</span>
-                        <button
-                            onClick={() => handleSendTracker(ambulance.id, ambulance.driver_email)}
-                            disabled={sendingTracker === ambulance.id}
-                            className={`ml-4 py-1 px-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${
-                                sendingTracker === ambulance.id ? 'opacity-50 cursor-not-allowed' : ''
-                            }`}
-                        >
-                            {sendingTracker === ambulance.id ? 'Sending...' : 'Send Tracker Link'}
-                        </button>
-                    </li>
-                ))}
-            </ul>
+            <h2 className="text-3xl font-bold mb-6 text-center">Ambulance List</h2>
+            <div className="overflow-x-auto">
+                <table className="min-w-full bg-white dark:bg-gray-800">
+                    <thead>
+                        <tr className="bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 uppercase text-sm leading-normal">
+                            <th className="py-3 px-6 text-left">Tracker Link</th>
+                            <th className="py-3 px-6 text-left">License Plate</th>
+                            <th className="py-3 px-6 text-left">Status</th>
+                            <th className="py-3 px-6 text-left">Driver Email</th>
+                        </tr>
+                    </thead>
+                    <tbody className="text-gray-600 dark:text-gray-300 text-sm font-light">
+                        {ambulances.map((ambulance) => (
+                            <tr key={ambulance.id} className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <td className="py-3 px-6 text-left">
+                                    <button
+                                        onClick={() => handleSendTracker(ambulance.id, ambulance.driver_email)}
+                                        disabled={sendingTracker === ambulance.id}
+                                        className={`py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${sendingTracker === ambulance.id ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                    >
+                                        Send Tracker Link
+                                    </button>
+                                </td>
+                                <td className="py-3 px-6 text-left">{ambulance.license_plate}</td>
+                                <td className="py-3 px-6 text-left">{ambulance.status}</td>
+                                <td className="py-3 px-6 text-left">{ambulance.driver_email}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };
