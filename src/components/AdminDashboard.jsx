@@ -12,7 +12,6 @@ import ManageOperators from './ManageOperators';
 import AllCases from './AllCases';
 import ManageAmbulances from './ManageAmbulances';
 import Profile from './Profile';
-import OperatorAmbulance from "./OperatorAmbulance";
 
 // Initialize Supabase client
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
@@ -20,8 +19,8 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const AdminDashboard = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Sidebar is initially open
+  const [isDarkMode, setIsDarkMode] = useState(false);  
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -125,7 +124,10 @@ const AdminDashboard = () => {
         {/* Navbar */}
         <header className="flex justify-between items-center py-4 px-6 bg-white dark:bg-gray-800 border-b-4 border-indigo-600">
           <div className="flex items-center">
-            <button onClick={toggleSidebar} className="text-gray-500 focus:outline-none">
+            <button
+              onClick={toggleSidebar}
+              className={`text-gray-500 focus:outline-none z-50 ${isSidebarOpen ? 'sidebar-open' : ''}`}
+            >
               <FiMenu className="h-6 w-6" />
             </button>
           </div>
@@ -147,7 +149,7 @@ const AdminDashboard = () => {
               <Route path="profile" element={<Profile />} />
               <Route path="operators" element={<ManageOperators />} />
               <Route path="cases" element={<AllCases />} />
-              <Route path="ambulances" element={<OperatorAmbulance />} />
+              <Route path="ambulances" element={<ManageAmbulances />} />
             </Routes>
           </div>
         </main>
