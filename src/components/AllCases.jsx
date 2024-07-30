@@ -13,6 +13,7 @@ const AllCases = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentCase, setCurrentCase] = useState(null);
+  const [sortOrder, setSortOrder] = useState('desc');
 
   useEffect(() => {
     fetchCases();
@@ -23,7 +24,8 @@ const AllCases = () => {
     try {
       const { data, error } = await supabase
         .from('cases')
-        .select('*');
+        .select('*')
+        .order('created_at', { ascending: false });
 
       if (error) throw error;
       setCases(data);
@@ -68,15 +70,33 @@ const AllCases = () => {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
+  const handleSortByDate = () => {
+    const sortedCases = [...cases].sort((a, b) => {
+      const dateA = new Date(a.created_at);
+      const dateB = new Date(b.created_at);
+      return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+    });
+    setCases(sortedCases);
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+  };
+
   return (
     <div className="container mx-auto px-4 dark:text-white">
       <h1 className="text-2xl font-bold mb-4">All Cases</h1>
-      <button
-        onClick={handleAddCase}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
-      >
-        <FiPlus className="inline-block mr-2" /> Add Case
-      </button>
+      <div className="flex justify-between mb-4">
+        <button
+          onClick={handleAddCase}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          <FiPlus className="inline-block mr-2" /> Add Case
+        </button>
+        <button
+          onClick={handleSortByDate}
+          className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Sort by Date ({sortOrder === 'asc' ? 'Ascending' : 'Descending'})
+        </button>
+      </div>
       {isLoading ? (
         <p>Loading cases...</p>
       ) : (
