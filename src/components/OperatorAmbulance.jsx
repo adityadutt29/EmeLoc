@@ -70,7 +70,7 @@ const OperatorAmbulance = () => {
 
     return (
         <div className="container mx-auto px-4 py-8 dark:text-white">
-            <ToastContainer />
+            <ToastContainer autoClose={3000} /> {/* Auto-close toasts after 3000ms (3 seconds) */}
             <h2 className="text-3xl font-bold mb-6 text-center">Ambulance List</h2>
             <div className="overflow-x-auto">
                 <table className="min-w-full bg-white dark:bg-gray-800">
