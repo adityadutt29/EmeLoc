@@ -54,17 +54,18 @@ const SignIn = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white py-12 px-4 sm:px-6 lg:px-8 relative">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-white py-12 px-4 sm:px-6 lg:px-8 relative">
       <ToastContainer />
-      <div className="absolute top-0 left-0 p-4">
-        <img src="/logo.jpg" alt="Logo" className="h-20 w-20" />
+      <div className="absolute top-0 left-0 p-4 flex items-center justify-center w-full sm:flex-row">
+        <span className="text-3xl font-extrabold text-gray-900 mr-3">Welcome to</span>
+        <img src="/banner.svg" alt="Banner" className="h-32 w-32 sm:h-40 sm:w-40" />
       </div>
       <div className="max-w-md w-full space-y-8">
         <div className="flex items-center justify-center">
-          <img src="/ambulance.jpg" alt="Ambulance" style={{ height: '150px', width: '250px' }} />
+          <img src="/ambulance.jpg" alt="Ambulance" className="h-30 w-60 sm:h-55 sm:w-80" />
         </div>
         <div className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Sign in to your account
+          Sign in to your Account
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSignIn}>
           <input type="hidden" name="remember" value="true" />
