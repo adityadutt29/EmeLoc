@@ -174,7 +174,10 @@ const OperatorDashboard = () => {
         {/* Navbar */}
         <header className="flex justify-between items-center py-4 px-6 bg-white dark:bg-gray-800 border-b-4 border-indigo-600">
           <div className="flex items-center">
-            <button onClick={toggleSidebar} className="text-gray-500 focus:outline-none">
+            <button
+              onClick={toggleSidebar}
+              className={`text-gray-500 focus:outline-none z-50 ${isSidebarOpen ? 'sidebar-open' : ''}`}
+            >
               <FiMenu className="h-6 w-6" />
             </button>
           </div>
