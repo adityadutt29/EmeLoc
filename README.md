@@ -70,4 +70,4 @@ Contributions are welcome! Please follow these steps to contribute:
 - Open a pull request.
 
 # Contact
-For any questions or issues, please open an issue on GitHub or reach out via email at sanatkulkarni100@gmail.com.
+For any questions or issues, please open an issue on GitHub or reach out via email at adityadutt29@outlook.com.
