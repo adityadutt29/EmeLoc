@@ -55,6 +55,11 @@ Open your browser and navigate to http://localhost:3000 to see the app in action
 - Set up the environment variables in Vercel settings.
 - Deploy the application directly from Vercel.
 
+# User Manual
+```
+https://unmarred-forgery-dc3.notion.site/User-Manual-for-EmeLoc-551b8187aa114b979194a2fecaab1720
+```
+
 # Contributing
 Contributions are welcome! Please follow these steps to contribute:
 
