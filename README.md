@@ -26,14 +26,14 @@ Emergency-Loc is a web-based system designed for emergency responders to efficie
 - Installation
 - Clone the repository:
 
-git clone https://github.com/SanatKulkarni/Emergency-Loc.git
+git clone https://github.com/adityadutt29/EmeLoc.git
 cd Emergency-Loc
 
 ### Installation
 
 1. Clone the repository:
    bash
-   git clone https://github.com/SanatKulkarni/Emergency-Loc.git
+   git clone https://github.com/adityadutt29/EmeLoc.git
    cd Emergency-Loc
    npm install
    
